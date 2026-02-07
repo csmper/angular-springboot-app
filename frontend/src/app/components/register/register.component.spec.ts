@@ -68,7 +68,7 @@ describe('RegisterComponent', () => {
 			component.confirmPassword = '123';
 
 			// Force the observable to be asynchronous
-			authServiceMock.register.mockReturnValue(of({}).pipe(observeOn(asyncScheduler)));
+			authServiceMock.register.mockReturnValue(of({ message: 'Successful registration' }).pipe(observeOn(asyncScheduler)));
 
 			component.onSubmit();
 

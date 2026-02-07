@@ -112,9 +112,8 @@ describe('UsersComponent', () => {
 	it('deleteUser should handle delete error gracefully', () => {
 		const userId = 1;
 		global.confirm = jest.fn(() => true);
-		mockUserService.deleteUser = jest.fn(() =>
-			throwError(() => new Error('Delete failed'))
-		);
+		
+		mockUserService.deleteUser.mockReturnValue(throwError(() => new Error('Delete failed')));
 
 		component.deleteUser(userId);
 
