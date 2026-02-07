@@ -8,7 +8,7 @@ import { User } from './auth.service';
 })
 export class UserService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'https://angular-springboot-app.onrender.com/api/users';
 
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);

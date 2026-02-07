@@ -33,7 +33,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
   
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = 'https://angular-springboot-app.onrender.com/api/auth';
   private currentUserSubject = new BehaviorSubject<string | null>(this.getStoredUser());
   public currentUser$ = this.currentUserSubject.asObservable();
 
