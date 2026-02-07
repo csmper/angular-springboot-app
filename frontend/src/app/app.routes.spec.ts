@@ -6,14 +6,14 @@ import { AuthService } from './services/auth.service';
 import { of } from 'rxjs';
 
 describe('App Routes', () => {
-	let authServiceMock: any; // Using any for brevity in mock setup
+	let authServiceMock: jest.Mocked<AuthService>;
 
 	beforeEach(() => {
 		authServiceMock = {
 			isLoggedIn: jest.fn(),
 			// Add this to satisfy DashboardComponent's ngOnInit
 			currentUser$: of('test-user')
-		};
+		} as unknown as jest.Mocked<AuthService>;
 
 		TestBed.configureTestingModule({
 			providers: [

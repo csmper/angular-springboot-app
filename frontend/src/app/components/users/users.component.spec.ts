@@ -6,155 +6,155 @@ import { AuthService } from '../../services/auth.service';
 import { provideRouter } from '@angular/router';
 
 describe('UsersComponent', () => {
-  let component: UsersComponent;
-  let fixture: ComponentFixture<UsersComponent>;
-  let userService: UserService;
-  let mockUserService: any;
-  let mockAuthService: any;
+	let component: UsersComponent;
+	let fixture: ComponentFixture<UsersComponent>;
+	let userService: UserService;
+	let mockUserService: jest.Mocked<UserService>;
+	let mockAuthService: jest.Mocked<AuthService>;
 
-  const mockUsers = [
-    { id: 1, username: 'user1', email: 'user1@test.com' },
-    { id: 2, username: 'user2', email: 'user2@test.com' }
-  ];
+	const mockUsers = [
+		{ id: 1, username: 'user1', email: 'user1@test.com' },
+		{ id: 2, username: 'user2', email: 'user2@test.com' }
+	];
 
-  beforeEach(async () => {
-    mockUserService = {
-      getAllUsers: jest.fn(() => of(mockUsers)),
-      deleteUser: jest.fn(() => of({}))
-    };
+	beforeEach(async () => {
+		mockUserService = {
+			getAllUsers: jest.fn(() => of(mockUsers)),
+			deleteUser: jest.fn(() => of({}))
+		} as unknown as jest.Mocked<UserService>;
 
-    mockAuthService = {
-      currentUser$: of('TestUser'),
-      logout: jest.fn()
-    };
+		mockAuthService = {
+			currentUser$: of('TestUser'),
+			logout: jest.fn()
+		} as unknown as jest.Mocked<AuthService>;
 
-    TestBed.resetTestingModule();
-    await TestBed.configureTestingModule({
-      imports: [UsersComponent],
-      providers: [
-        { provide: UserService, useValue: mockUserService },
-        { provide: AuthService, useValue: mockAuthService },
-        provideRouter([])
-      ]
-    }).compileComponents();
+		TestBed.resetTestingModule();
+		await TestBed.configureTestingModule({
+			imports: [UsersComponent],
+			providers: [
+				{ provide: UserService, useValue: mockUserService },
+				{ provide: AuthService, useValue: mockAuthService },
+				provideRouter([])
+			]
+		}).compileComponents();
 
-    fixture = TestBed.createComponent(UsersComponent);
-    component = fixture.componentInstance;
-    userService = TestBed.inject(UserService);
-  });
+		fixture = TestBed.createComponent(UsersComponent);
+		component = fixture.componentInstance;
+		userService = TestBed.inject(UserService);
+	});
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 
-  it('ngOnInit should subscribe to currentUser$ and load users', () => {
-    fixture.detectChanges(); // Triggers ngOnInit
+	it('ngOnInit should subscribe to currentUser$ and load users', () => {
+		fixture.detectChanges(); // Triggers ngOnInit
 
-    expect(component.username).toBe('TestUser');
-    expect(userService.getAllUsers).toHaveBeenCalled();
-    expect(component.users).toEqual(mockUsers);
-    expect(component.isLoading).toBe(false);
-  });
+		expect(component.username).toBe('TestUser');
+		expect(userService.getAllUsers).toHaveBeenCalled();
+		expect(component.users).toEqual(mockUsers);
+		expect(component.isLoading).toBe(false);
+	});
 
-  it('loadUsers should fetch users and set isLoading flag', () => {
-    component.loadUsers();
+	it('loadUsers should fetch users and set isLoading flag', () => {
+		component.loadUsers();
 
-    // Since of() is synchronous, by the time loadUsers() returns,
-    // the subscription has already completed and isLoading is false
-    expect(userService.getAllUsers).toHaveBeenCalled();
-    
-    // After subscription completes
-    expect(component.users).toEqual(mockUsers);
-    expect(component.isLoading).toBe(false);
-    expect(component.errorMessage).toBe('');
-  });
+		// Since of() is synchronous, by the time loadUsers() returns,
+		// the subscription has already completed and isLoading is false
+		expect(userService.getAllUsers).toHaveBeenCalled();
 
-  it('loadUsers should handle error and set errorMessage', () => {
-    mockUserService.getAllUsers = jest.fn(() =>
-      throwError(() => new Error('Network error'))
-    );
+		// After subscription completes
+		expect(component.users).toEqual(mockUsers);
+		expect(component.isLoading).toBe(false);
+		expect(component.errorMessage).toBe('');
+	});
 
-    component.loadUsers();
+	it('loadUsers should handle error and set errorMessage', () => {
+		mockUserService.getAllUsers = jest.fn(() =>
+			throwError(() => new Error('Network error'))
+		);
 
-    expect(component.errorMessage).toBe('Failed to load users: Error: Network error');
-    expect(component.isLoading).toBe(false);
-  });
+		component.loadUsers();
 
-  it('deleteUser should call userService.deleteUser and reload users', () => {
-    const userId = 1;
-    global.confirm = jest.fn(() => true);
+		expect(component.errorMessage).toBe('Failed to load users: Error: Network error');
+		expect(component.isLoading).toBe(false);
+	});
 
-    component.deleteUser(userId);
+	it('deleteUser should call userService.deleteUser and reload users', () => {
+		const userId = 1;
+		global.confirm = jest.fn(() => true);
 
-    expect(mockUserService.deleteUser).toHaveBeenCalledWith(userId);
-    expect(mockUserService.getAllUsers).toHaveBeenCalled();
-  });
+		component.deleteUser(userId);
 
-  it('deleteUser should not call deleteUser if confirm returns false', () => {
-    const userId = 1;
-    global.confirm = jest.fn(() => false);
+		expect(mockUserService.deleteUser).toHaveBeenCalledWith(userId);
+		expect(mockUserService.getAllUsers).toHaveBeenCalled();
+	});
 
-    component.deleteUser(userId);
+	it('deleteUser should not call deleteUser if confirm returns false', () => {
+		const userId = 1;
+		global.confirm = jest.fn(() => false);
 
-    expect(mockUserService.deleteUser).not.toHaveBeenCalled();
-  });
+		component.deleteUser(userId);
 
-  it('deleteUser should not do anything if id is undefined', () => {
-    component.deleteUser(undefined);
+		expect(mockUserService.deleteUser).not.toHaveBeenCalled();
+	});
 
-    expect(mockUserService.deleteUser).not.toHaveBeenCalled();
-  });
+	it('deleteUser should not do anything if id is undefined', () => {
+		component.deleteUser(undefined);
 
-  it('deleteUser should handle delete error gracefully', () => {
-    const userId = 1;
-    global.confirm = jest.fn(() => true);
-    mockUserService.deleteUser = jest.fn(() =>
-      throwError(() => new Error('Delete failed'))
-    );
+		expect(mockUserService.deleteUser).not.toHaveBeenCalled();
+	});
 
-    component.deleteUser(userId);
+	it('deleteUser should handle delete error gracefully', () => {
+		const userId = 1;
+		global.confirm = jest.fn(() => true);
+		mockUserService.deleteUser = jest.fn(() =>
+			throwError(() => new Error('Delete failed'))
+		);
 
-    expect(component.errorMessage).toBe('Failed to delete user: Error: Delete failed');
-  });
+		component.deleteUser(userId);
 
-  it('logout should call authService.logout', () => {
-    component.logout();
+		expect(component.errorMessage).toBe('Failed to delete user: Error: Delete failed');
+	});
 
-    expect(mockAuthService.logout).toHaveBeenCalled();
-  });
+	it('logout should call authService.logout', () => {
+		component.logout();
 
-  it('should handle null username in ngOnInit', () => {
-    const nullMockAuthService = {
-      currentUser$: of(null),
-      logout: jest.fn()
-    };
+		expect(mockAuthService.logout).toHaveBeenCalled();
+	});
 
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [UsersComponent],
-      providers: [
-        { provide: UserService, useValue: mockUserService },
-        { provide: AuthService, useValue: nullMockAuthService },
-        provideRouter([])
-      ]
-    });
+	it('should handle null username in ngOnInit', () => {
+		const nullMockAuthService = {
+			currentUser$: of(null),
+			logout: jest.fn()
+		};
 
-    const localFixture = TestBed.createComponent(UsersComponent);
-    const localComponent = localFixture.componentInstance;
-    localFixture.detectChanges();
+		TestBed.resetTestingModule();
+		TestBed.configureTestingModule({
+			imports: [UsersComponent],
+			providers: [
+				{ provide: UserService, useValue: mockUserService },
+				{ provide: AuthService, useValue: nullMockAuthService },
+				provideRouter([])
+			]
+		});
 
-    expect(localComponent.username).toBe('');
-  });
+		const localFixture = TestBed.createComponent(UsersComponent);
+		const localComponent = localFixture.componentInstance;
+		localFixture.detectChanges();
 
-  it('should display users list correctly', () => {
-    fixture.detectChanges();
+		expect(localComponent.username).toBe('');
+	});
 
-    expect(component.users.length).toBe(2);
-    expect(component.users[0].username).toBe('user1');
-    expect(component.users[1].email).toBe('user2@test.com');
-  });
+	it('should display users list correctly', () => {
+		fixture.detectChanges();
+
+		expect(component.users.length).toBe(2);
+		expect(component.users[0].username).toBe('user1');
+		expect(component.users[1].email).toBe('user2@test.com');
+	});
 });

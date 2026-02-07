@@ -7,20 +7,20 @@ import { FormsModule } from '@angular/forms';
 
 describe('RegisterComponent', () => {
 	let component: RegisterComponent;
-	let authServiceMock: any;
-	let routerMock: any;
+	let authServiceMock: jest.Mocked<AuthService>;
+	let routerMock: jest.Mocked<Router>;
 
 	beforeEach(async () => {
 		authServiceMock = {
 			register: jest.fn()
-		};
+		} as unknown as jest.Mocked<AuthService>;
 
 		routerMock = {
 			navigate: jest.fn(),
 			events: of(), // Prevents RouterLink from crashing
 			serializeUrl: jest.fn(),
 			createUrlTree: jest.fn().mockReturnValue({})
-		};
+		} as unknown as jest.Mocked<Router>;
 
 		await TestBed.configureTestingModule({
 			imports: [RegisterComponent, FormsModule],
