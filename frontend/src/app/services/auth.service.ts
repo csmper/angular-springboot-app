@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,10 @@ export interface User {
   username: string;
   email: string;
   password?: string;
+}
+
+export interface RegisterResponse {
+  message: string;
 }
 
 export interface LoginRequest {
@@ -47,8 +51,8 @@ export class AuthService {
     );
   }
 
-  register(user: User): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  register(user: User): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, user);
   }
 
   logout(): void {

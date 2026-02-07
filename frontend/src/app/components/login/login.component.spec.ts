@@ -1,14 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, Router, provideRouter } from '@angular/router'; // Import provideRouter
+import { ActivatedRoute, Router } from '@angular/router'; // Import provideRouter
 import { of, throwError } from 'rxjs';
 
 describe('LoginComponent', () => {
 	let component: LoginComponent;
 	let fixture: ComponentFixture<LoginComponent>;
 	let router: Router; // Reference to the real router instance
-	let authService: AuthService; // Reference to the real auth service instance
 
 	const MockSuccessfulLoginResponse = {
 		token: 'fake-jwt-token',
@@ -43,7 +42,6 @@ describe('LoginComponent', () => {
 
 		// Inject the real router from TestBed so we can spy on it
 		router = TestBed.inject(Router);
-		authService = TestBed.inject(AuthService);
 
 		fixture.detectChanges();
 	});

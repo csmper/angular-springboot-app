@@ -39,12 +39,8 @@ describe('DashboardComponent', () => {
 	});
 
 	it('should navigate or logout correctly', () => {
-		// If you need to check if a navigation happened:
-		const navigateSpy = jest.spyOn(router, 'navigate');
-
 		component.logout();
 		expect(mockAuthService.logout).toHaveBeenCalled();
-		// Example: expect(navigateSpy).toHaveBeenCalledWith(['/login']);
 	});
 
 	it('ngOnInit should subscribe to currentUser$ and set username', (done) => {

@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit {
       error: (error) => {
         this.errorMessage = 'Failed to load users';
         this.isLoading = false;
-        // console.error('Error loading users:', error);
+        console.log('Error loading users:', error);
       }
     });
   }
@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
         },
         error: (error) => {
           this.errorMessage = 'Failed to delete user';
-          // console.error('Error deleting user:', error);
+          console.log('Error deleting user:', error);
         }
       });
     }

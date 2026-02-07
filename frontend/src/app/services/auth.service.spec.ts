@@ -17,7 +17,7 @@ describe('AuthService', () => {
 		routerMock = {
 			navigate: jest.fn(),
 			events: of(), // Essential for internal router stability
-		} as any;
+		} as unknown as jest.Mocked<Router>;
 
 		// 2. Mock localStorage
 		const store: Record<string, string> = {};
