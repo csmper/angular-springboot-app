@@ -7,14 +7,11 @@ import { AuthService } from '../services/auth.service';
 describe('authInterceptor', () => {
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
-  let authServiceMock: jest.Mocked<AuthService>;
+  const authServiceMock: any = {
+    getToken: jest.fn()
+  };
 
   beforeEach(() => {
-    // 1. Create the mock for AuthService
-    authServiceMock = {
-      getToken: jest.fn()
-    } as any;
-
     TestBed.configureTestingModule({
       providers: [
         // 2. Register the interceptor within the HttpClient pipeline

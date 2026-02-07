@@ -1,4 +1,4 @@
-import { TestBed, fixtureCanWait } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';

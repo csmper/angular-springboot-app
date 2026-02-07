@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 import { AuthService } from '../../services/auth.service';
-import { Router, provideRouter } from '@angular/router'; // Import provideRouter
+import { provideRouter } from '@angular/router'; // Import provideRouter
 import { of } from 'rxjs';
 
 describe('DashboardComponent', () => {
 	let component: DashboardComponent;
 	let fixture: ComponentFixture<DashboardComponent>;
-	let router: Router; // Reference to the real router instance
 
 	const mockAuthService = {
 		currentUser$: of('TestUser'),
@@ -28,8 +27,6 @@ describe('DashboardComponent', () => {
 		fixture = TestBed.createComponent(DashboardComponent);
 		component = fixture.componentInstance;
 
-		// Inject the real router from TestBed so we can spy on it
-		router = TestBed.inject(Router);
 
 		fixture.detectChanges();
 	});

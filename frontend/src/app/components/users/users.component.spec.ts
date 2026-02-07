@@ -3,14 +3,12 @@ import { of, throwError } from 'rxjs';
 import { UsersComponent } from './users.component';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { Router, provideRouter } from '@angular/router';
+import { provideRouter } from '@angular/router';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
   let userService: UserService;
-  let authService: AuthService;
-  let router: Router;
   let mockUserService: any;
   let mockAuthService: any;
 
@@ -43,8 +41,6 @@ describe('UsersComponent', () => {
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
     userService = TestBed.inject(UserService);
-    authService = TestBed.inject(AuthService);
-    router = TestBed.inject(Router);
   });
 
   afterEach(() => {
@@ -59,7 +55,7 @@ describe('UsersComponent', () => {
     fixture.detectChanges(); // Triggers ngOnInit
 
     expect(component.username).toBe('TestUser');
-    expect(mockUserService.getAllUsers).toHaveBeenCalled();
+    expect(userService.getAllUsers).toHaveBeenCalled();
     expect(component.users).toEqual(mockUsers);
     expect(component.isLoading).toBe(false);
   });
@@ -69,7 +65,7 @@ describe('UsersComponent', () => {
 
     // Since of() is synchronous, by the time loadUsers() returns,
     // the subscription has already completed and isLoading is false
-    expect(mockUserService.getAllUsers).toHaveBeenCalled();
+    expect(userService.getAllUsers).toHaveBeenCalled();
     
     // After subscription completes
     expect(component.users).toEqual(mockUsers);
@@ -78,7 +74,6 @@ describe('UsersComponent', () => {
   });
 
   it('loadUsers should handle error and set errorMessage', () => {
-    const errorMsg = 'Failed to load users';
     mockUserService.getAllUsers = jest.fn(() =>
       throwError(() => new Error('Network error'))
     );
