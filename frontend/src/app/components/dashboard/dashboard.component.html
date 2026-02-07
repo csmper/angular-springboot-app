@@ -1,0 +1,41 @@
+<div class="dashboard-container">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <h1>Angular SpringBoot App</h1>
+    </div>
+    <div class="nav-menu">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/users" routerLinkActive="active">Users</a>
+      <div class="user-info">
+        <span>Welcome, {{ username }}</span>
+        <button class="btn btn-secondary" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="welcome-section">
+      <h2>Welcome to the Dashboard</h2>
+      <p>You are successfully logged in!</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Total Users</h3>
+        <p class="card-number">--</p>
+        <a routerLink="/users" class="card-link">View Users →</a>
+      </div>
+
+      <div class="card">
+        <h3>Your Profile</h3>
+        <p class="card-text">Username: {{ username }}</p>
+        <a href="#" class="card-link">Edit Profile →</a>
+      </div>
+
+      <div class="card">
+        <h3>System Status</h3>
+        <p class="card-status">✓ All systems operational</p>
+      </div>
+    </div>
+  </div>
+</div>

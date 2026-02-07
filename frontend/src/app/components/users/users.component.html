@@ -1,0 +1,67 @@
+<div class="users-container">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <h1>Angular SpringBoot App</h1>
+    </div>
+    <div class="nav-menu">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/users" routerLinkActive="active">Users</a>
+      <div class="user-info">
+        <span>Welcome, {{ username }}</span>
+        <button class="btn btn-secondary" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h2>User Management</h2>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert-error">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (isLoading) {
+      <div class="loading">
+        Loading users...
+      </div>
+    }
+
+    @if (!isLoading) {
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users; track user) {
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            }
+            @if (users.length === 0) {
+              <tr>
+                <td colspan="4" class="no-data">No users found</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
