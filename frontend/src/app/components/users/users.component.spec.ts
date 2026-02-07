@@ -85,7 +85,7 @@ describe('UsersComponent', () => {
 
     component.loadUsers();
 
-    expect(component.errorMessage).toBe('Failed to load users');
+    expect(component.errorMessage).toBe('Failed to load users: Error: Network error');
     expect(component.isLoading).toBe(false);
   });
 
@@ -123,7 +123,7 @@ describe('UsersComponent', () => {
 
     component.deleteUser(userId);
 
-    expect(component.errorMessage).toBe('Failed to delete user');
+    expect(component.errorMessage).toBe('Failed to delete user: Error: Delete failed');
   });
 
   it('logout should call authService.logout', () => {
