@@ -1,8 +1,10 @@
 {
-	"rewrites": [
-		{
-			"source": "/(.*)",
-			"destination": "/index.html"
-		}
-	]
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/angular-springboot-frontend/browser",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
