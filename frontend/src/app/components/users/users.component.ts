@@ -9,7 +9,7 @@ import { AuthService, User } from '../../services/auth.service';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
   private userService = inject(UserService);

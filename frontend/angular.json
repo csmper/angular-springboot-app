@@ -16,6 +16,7 @@
             "outputPath": "dist/angular-springboot-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "inlineStyleLanguage": "scss",
             "polyfills": [
               "zone.js"
             ],
@@ -25,7 +26,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -79,6 +80,7 @@
   },
   "schematics": {
     "@schematics/angular:component": {
+      "style": "scss",
       "type": "component"
     },
     "@schematics/angular:directive": {

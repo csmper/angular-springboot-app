@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   private authService = inject(AuthService);
