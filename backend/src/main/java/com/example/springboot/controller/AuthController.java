@@ -7,6 +7,8 @@ import com.example.springboot.dto.RegisterRequest;
 import com.example.springboot.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class AuthController {
 
     private final AuthService authService;
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Operation(summary = "Register a new user", description = "Creates a new user account")
     @ApiResponses(value = {
@@ -47,10 +51,12 @@ public class AuthController {
     })
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+        logger.info("Login attempt for user: {}", request.getUsername());
         try {
             AuthResponse response = authService.login(request);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
+            logger.error("Login failed for user: {} - Error: {}", request.getUsername(), e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new MessageResponse("Invalid username or password"));
         }
