@@ -10,7 +10,7 @@ describe('AuthService', () => {
 	let httpMock: HttpTestingController;
 	let routerMock: jest.Mocked<Router>;
 
-	const apiUrl = 'http://localhost:8080/api/auth';
+	const apiUrl = 'https://angular-springboot-app.onrender.com/api/auth';
 
 	beforeEach(() => {
 		// 1. Create a mock for the Router

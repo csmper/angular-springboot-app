@@ -7,7 +7,7 @@ import { User } from './auth.service';
 describe('UserService', () => {
   let service: UserService;
   let httpMock: HttpTestingController;
-  const apiUrl = 'http://localhost:8080/api/users';
+  const apiUrl = 'https://angular-springboot-app.onrender.com/api/users';
 
   const mockUsers: User[] = [
     { id: 1, username: 'jdoe', email: 'jdoe@example.com' } as User,
